@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "425692203069",
+    "firebase_url": "https://racecomm-e52b4.firebaseio.com",
+    "project_id": "racecomm-e52b4",
+    "storage_bucket": "racecomm-e52b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425692203069:android:dc4aad87d6882350b68254",
+        "android_client_info": {
+          "package_name": "com.example.racecomm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425692203069-jcotmbv77gbn7af8fm1as05b41i56lo9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.racecomm",
+            "certificate_hash": "0e0adf697b8761499d0f0fd495261dc76e01f125"
+          }
+        },
+        {
+          "client_id": "425692203069-3m22l281ga70prsu8cgp5a87cjodctmu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHoNymmUnF2pCKftNqJi6La2wZtgu7bMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425692203069-3m22l281ga70prsu8cgp5a87cjodctmu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

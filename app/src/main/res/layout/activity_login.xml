@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register"
+    tools:context=".LoginActivity">
+
+    <!--Logo-->
+    <ImageView
+        android:id="@+id/Login_Logo"
+        android:layout_width="208dp"
+        android:layout_height="111dp"
+        android:layout_marginTop="76dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/logo_pic"
+
+        app:srcCompat="@drawable/logo" />
+
+    <!--Email textbox-->
+    <EditText
+        android:id="@+id/login_email"
+
+        android:layout_width="260dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="280dp"
+
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:drawableLeft="@drawable/email"
+        android:foreground="@drawable/rounded_rectangle"
+
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="@color/redLogo"
+        android:textColorLink="#FFFFFF" />
+
+    <!--Password textbox-->
+    <EditText
+        android:id="@+id/login_password"
+
+        android:layout_width="260dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="345dp"
+        android:layout_centerHorizontal="true"
+
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:drawableLeft="@drawable/password"
+        android:foreground="@drawable/rounded_rectangle"
+
+        android:textColor="#FFFFFF"
+        android:textColorHint="@color/redLogo"
+        android:textColorLink="@color/colorAccent" />
+
+    <!--Login Button-->
+    <Button
+        android:id="@+id/login_btn"
+
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="410dp"
+        android:layout_centerHorizontal="true"
+
+        android:background="@color/redLogo"
+        android:text="L  O  G  I  N"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <!--"Or login with"-->
+    <TextView
+
+        android:id="@+id/Login_with"
+
+        android:layout_marginTop="475dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Or login with "
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textAlignment="center" />
+
+    <!--Google Icon-->
+    <ImageView
+        android:id="@+id/google_signin"
+
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="510dp"
+        android:layout_marginStart="120dp"
+
+        android:src="@drawable/google" />
+
+    <!--FaceBook Icon-->
+    <ImageView
+        android:id="@+id/facebook_signin"
+
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="235dp"
+        android:layout_marginTop="510dp"
+
+        android:src="@drawable/facebook" />
+
+    <!--"Forgot Password"-->
+    <TextView
+        android:id="@+id/forgot_password"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="580dp"
+        android:layout_centerHorizontal="true"
+
+        android:text="F O R G O T  P A S S W O R D"
+        android:textColor="#FFFFFF"
+        />
+
+    <!--"Register"-->
+    <TextView
+        android:id="@+id/register_from_login"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="610dp"
+        android:layout_centerHorizontal="true"
+
+        android:text="R E G I S T E R"
+        android:textColor="#FFFFFF"
+/>
+
+
+
+</RelativeLayout>
