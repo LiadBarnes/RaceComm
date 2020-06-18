@@ -14,11 +14,20 @@ import android.os.Bundle;
 import android.os.RecoverySystem;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +37,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView postFeed;
     private Toolbar toolbar;
 
+    private CircleImageView NavProfileImage;
+    private TextView NavProfileUName;
+
     private FirebaseAuth mAuth;
+    private DatabaseReference user_ref;
+
+    String curr_user_id;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -38,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-
+        curr_user_id = mAuth.getCurrentUser().getUid();
+        user_ref = FirebaseDatabase.getInstance().getReference().child("Users");
         toolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Home");
@@ -50,7 +66,39 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
         View navView = navigationView.inflateHeaderView(R.layout.navigation_header);
+        NavProfileImage = (CircleImageView) navView.findViewById(R.id.nav_profile_image);
+        NavProfileUName = (TextView) navView.findViewById(R.id.nav_user_full_name);
+
+        user_ref.child(curr_user_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if(dataSnapshot.exists())
+                {
+                    if(dataSnapshot.hasChild("fullname"))
+                    {
+                        String fullname = dataSnapshot.child("fullname").getValue().toString();
+                        NavProfileUName.setText(fullname);
+                    }
+                    if(dataSnapshot.hasChild("profileimage"))
+                    {
+                        String image = dataSnapshot.child("profileimage").getValue().toString();
+                        Picasso.get().load(image).placeholder(R.drawable.profile).into(NavProfileImage);
+                    }
+                    else
+                    {
+                        Toast.makeText(MainActivity.this, "Profile name do not exists...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -68,11 +116,41 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser == null)
-        {// user is not logged in
+
+        if(currentUser == null) {
+            // user is not logged in
             SendUserToLoginActivity();
         }
+        else{
+         CheckUserExistance();
+        }
 
+    }
+
+    private void CheckUserExistance() {
+        final String user_id = mAuth.getCurrentUser().getUid();
+
+        user_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(user_id)){
+                    SendUserToSetupActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void SendUserToSetupActivity() {
+        Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
+        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(setupIntent);
+        finish();
     }
 
     private void SendUserToLoginActivity() {
@@ -118,7 +196,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_Logout:
-                Toast.makeText(this,"Logout", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"Logout", Toast.LENGTH_SHORT).show();
+                mAuth.signOut();
+                SendUserToLoginActivity();
                 break;
         }
     }
