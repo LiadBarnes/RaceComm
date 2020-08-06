@@ -11,9 +11,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.RecoverySystem;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private RecyclerView postFeed;
     private Toolbar toolbar;
+    private ImageButton AddNewPostButton;
 
     private CircleImageView NavProfileImage;
     private TextView NavProfileUName;
@@ -55,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         curr_user_id = mAuth.getCurrentUser().getUid();
         user_ref = FirebaseDatabase.getInstance().getReference().child("Users");
-        toolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Home");
 
+        AddNewPostButton = (ImageButton) findViewById(R.id.add_new_post_button);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawble_layout_main);
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, R.string.drawer_open, R.string.drawer_close);
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(MainActivity.this, "Profile name do not exists...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Profile name does not exists", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -108,7 +110,20 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        AddNewPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                SendUserToPostActivity();
+            }
+        });
+
+        //DisplayAllUsersPosts();
+
     }
+
+
 
     @Override
     protected void onStart()
@@ -160,6 +175,11 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void SendUserToPostActivity() {
+        Intent add_new_post = new Intent(MainActivity.this, PostActivity.class);
+        startActivity(add_new_post);
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
@@ -171,6 +191,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void UserMenuSelector(MenuItem menuItem) {
         switch (menuItem.getItemId()){
+            case R.id.nav_post:
+                SendUserToPostActivity();
+                break;
             case R.id.nav_profile:
                 Toast.makeText(this,"Profile", Toast.LENGTH_SHORT).show();
                 break;

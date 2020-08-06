@@ -8,18 +8,6 @@
     android:background="@drawable/register"
     tools:context=".RegisterActivity">
 
-    <!--Logo-->
-    <ImageView
-        android:id="@+id/Login_Logo"
-
-        android:layout_width="208dp"
-        android:layout_height="111dp"
-
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="76dp"
-
-        android:contentDescription="@string/logo_pic"
-        app:srcCompat="@drawable/logo" />
 
     <!--"Email"-->
     <EditText
@@ -27,7 +15,7 @@
 
         android:layout_width="260dp"
         android:layout_height="46dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="360dp"
         android:layout_centerHorizontal="true"
 
         android:drawableLeft="@drawable/email"
@@ -49,7 +37,7 @@
         android:layout_height="46dp"
 
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="376dp"
+        android:layout_marginTop="450dp"
 
         android:drawableLeft="@drawable/password"
         android:foreground="@drawable/rounded_rectangle"
@@ -68,7 +56,7 @@
         android:layout_width="260dp"
         android:layout_height="46dp"
 
-        android:layout_marginTop="452dp"
+        android:layout_marginTop="540dp"
         android:layout_centerHorizontal="true"
 
         android:drawableLeft="@drawable/password"
@@ -88,7 +76,7 @@
         android:layout_width="257dp"
         android:layout_height="37dp"
 
-        android:layout_marginTop="560dp"
+        android:layout_marginTop="700dp"
         android:layout_centerHorizontal="true"
 
         android:background="@drawable/inputs"

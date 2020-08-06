@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="@drawable/register">
+    android:background="@drawable/nav_head">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/nav_profile_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginStart="120dp"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/profile"
         app:civ_border_color='@color/colorPrimaryDark'
         app:civ_border_width="2dp" />
@@ -20,7 +20,7 @@
         android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_marginStart="130dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="160dp"
         android:text="@string/profile_name"
         android:textAlignment="center"
