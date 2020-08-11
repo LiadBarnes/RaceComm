@@ -43,4 +43,14 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
+    // text
+    implementation 'at.blogc:expandabletextview:1.0.5'
+
+    //fb login
+    implementation 'com.facebook.android:facebook-login:5.15.3'
+
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }
