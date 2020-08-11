@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
+
 public class ProfileActivity extends AppCompatActivity {
 
     private Context context = ProfileActivity.this;
@@ -39,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     String profileid;
 
-    ImageButton saved_photos;
+    ImageButton saved_fotos;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

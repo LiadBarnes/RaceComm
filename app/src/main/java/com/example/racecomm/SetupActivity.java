@@ -1,21 +1,18 @@
 package com.example.racecomm;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.storage.StorageManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Continuation;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -35,8 +32,6 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
-import javax.xml.transform.Result;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SetupActivity extends AppCompatActivity {
@@ -51,7 +46,6 @@ public class SetupActivity extends AppCompatActivity {
 
     private StorageTask uploadTask;
     private StorageReference user_profile_img_ref;
-
 
 
     String curr_user_id;
@@ -100,15 +94,11 @@ public class SetupActivity extends AppCompatActivity {
         user_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists())
-                {
-                    if (dataSnapshot.hasChild("profileimage"))
-                    {
+                if ( dataSnapshot.exists() ) {
+                    if ( dataSnapshot.hasChild("profileimage") ) {
                         String image = dataSnapshot.child("profileimage").getValue().toString();
                         Picasso.get().load(image).placeholder(R.drawable.profile).into(ProfileImage);
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(SetupActivity.this, "Please select profile image first.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -122,26 +112,24 @@ public class SetupActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == gallery_picker && resultCode == RESULT_OK && data != null) {
+        if ( requestCode == gallery_picker && resultCode == RESULT_OK && data != null ) {
             Uri imageUri = data.getData();
 
             CropImage.activity(imageUri)
                     .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1,1)
+                    .setAspectRatio(1, 1)
                     .start(this);
         }
 
         // Cuando se pulsa en el crop button
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
-        {
+        if ( requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE ) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-            if (resultCode == RESULT_OK) {
+            if ( resultCode == RESULT_OK ) {
 
                 loadingBar.setTitle("Profile picture uploading");
                 loadingBar.setMessage("Please wait...");
@@ -155,7 +143,7 @@ public class SetupActivity extends AppCompatActivity {
                 filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if(task.isSuccessful()) {
+                        if ( task.isSuccessful() ) {
 
                             Toast.makeText(SetupActivity.this, "The image saved successfully", Toast.LENGTH_SHORT).show();
 
@@ -170,17 +158,16 @@ public class SetupActivity extends AppCompatActivity {
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
+                                                    if ( task.isSuccessful() ) {
                                                         Intent selfIntent = new Intent(SetupActivity.this, SetupActivity.class);
                                                         startActivity(selfIntent);
 
                                                         Toast.makeText(SetupActivity.this, "The image saved successfully...", Toast.LENGTH_SHORT).show();
-                                                        loadingBar.dismiss();
                                                     } else {
                                                         String message = task.getException().getMessage();
                                                         Toast.makeText(SetupActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                                                        loadingBar.dismiss();
                                                     }
+                                                    loadingBar.dismiss();
                                                 }
                                             });
                                 }
@@ -188,8 +175,7 @@ public class SetupActivity extends AppCompatActivity {
                         }
                     }
                 });
-            }
-            else {
+            } else {
                 Toast.makeText(SetupActivity.this, "Error Occured, Try again", Toast.LENGTH_SHORT).show();
                 loadingBar.dismiss();
             }
@@ -202,16 +188,15 @@ public class SetupActivity extends AppCompatActivity {
         String full_name = FullName.getText().toString();
         String country = Country.getText().toString();
 
-        if(TextUtils.isEmpty(user_name) || TextUtils.isEmpty(full_name) || TextUtils.isEmpty(country)){
-            Toast.makeText(this,"No blank fields allowed", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        if ( TextUtils.isEmpty(user_name) || TextUtils.isEmpty(full_name) || TextUtils.isEmpty(country) ) {
+            Toast.makeText(this, "No blank fields allowed", Toast.LENGTH_SHORT).show();
+        } else {
             loading_bar.setTitle("Saving your information");
             loading_bar.setMessage("Please wait...");
             loading_bar.show();
             loading_bar.setCanceledOnTouchOutside(true);
 
-            HashMap user_map = new HashMap();
+            HashMap<String, Object> user_map = new HashMap<>();
             user_map.put("username", user_name);
             user_map.put("fullname", full_name);
             user_map.put("gender", "none");
@@ -222,20 +207,17 @@ public class SetupActivity extends AppCompatActivity {
             user_ref.updateChildren(user_map).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
-                    if(task.isSuccessful()){
+                    if ( task.isSuccessful() ) {
                         SendUserToMainActivity();
-                        Toast.makeText(SetupActivity.this,"User information stored successfully", Toast.LENGTH_LONG).show();
-                        loading_bar.dismiss();
-                    }
-                    else{
+                        Toast.makeText(SetupActivity.this, "User information stored successfully", Toast.LENGTH_LONG).show();
+                    } else {
                         Toast.makeText(SetupActivity.this,
-                                "Error Occurred" +task.getException().getMessage(),
+                                "Error Occurred" + task.getException().getMessage(),
                                 Toast.LENGTH_LONG).show();
-                        loading_bar.dismiss();
                     }
+                    loading_bar.dismiss();
                 }
             });
-
 
 
         }
