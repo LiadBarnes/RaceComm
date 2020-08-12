@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.racecomm.adapter.MyPhotosAdapter;
 import com.example.racecomm.model.Post;
 import com.example.racecomm.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -40,7 +45,9 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     String profileid;
 
-    ImageButton saved_fotos;
+    private RecyclerView recyclerView;
+    private MyPhotosAdapter myPhotosAdapter;
+    private List<Post> postList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +59,6 @@ public class ProfileActivity extends AppCompatActivity {
         SharedPreferences prefs = context.getSharedPreferences("PREFS", MODE_PRIVATE);
         profileid = prefs.getString("profileid", "none");
 
-//        profileid = firebaseUser.getUid();
 
         image_profile = findViewById(R.id.image_profile);
         posts = findViewById(R.id.posts);
@@ -63,22 +69,22 @@ public class ProfileActivity extends AppCompatActivity {
         edit_profile = findViewById(R.id.edit_profile);
         logout = findViewById(R.id.logout);
 
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(mLayoutManager);
+        postList = new ArrayList<>();
+        myPhotosAdapter = new MyPhotosAdapter(context, postList);
+        recyclerView.setAdapter(myPhotosAdapter);
+
         userInfo();
         getFollowers();
         getNrPosts();
+        myPhotos();
 
         if ( profileid.equals(firebaseUser.getUid()) ) {
             edit_profile.setText("Edit Profile");
-
-            if ( edit_profile.getText().toString().toUpperCase(Locale.getDefault()).contains("EDIT PROFILE") ) {
-                edit_profile.setVisibility(View.GONE);
-                logout.setVisibility(View.VISIBLE);
-            } else {
-                edit_profile.setVisibility(View.VISIBLE);
-                logout.setVisibility(View.GONE);
-            }
         } else {
-            edit_profile.setVisibility(View.VISIBLE);
             logout.setVisibility(View.GONE);
             checkFollow();
         }
@@ -88,7 +94,11 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String btn = edit_profile.getText().toString();
 
-                if ( btn.toLowerCase(Locale.getDefault()).equals("follow") ) {
+                if ( btn.equals("Edit Profile") ) {
+
+                    startActivity(new Intent(context, EditProfileActivity.class));
+
+                } else if ( btn.toLowerCase(Locale.getDefault()).equals("follow") ) {
 
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
                             .child("following").child(profileid).setValue(true);
@@ -112,7 +122,7 @@ public class ProfileActivity extends AppCompatActivity {
                 new AlertDialog.Builder(ProfileActivity.this)
                         .setIcon(R.drawable.profile_icon)
                         .setTitle("Log Out Application")
-                        .setMessage("Are you want to log out?")
+                        .setMessage("Are you sure you want to log out?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -124,6 +134,29 @@ public class ProfileActivity extends AppCompatActivity {
                         })
                         .setNegativeButton("No", null)
                         .show();
+            }
+        });
+    }
+
+    private void myPhotos() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                postList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Post post = snapshot.getValue(Post.class);
+                    if ( post.getPublisher().equals(profileid) ) {
+                        postList.add(post);
+                    }
+                }
+                Collections.reverse(postList);
+                myPhotosAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

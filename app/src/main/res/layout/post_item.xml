@@ -127,7 +127,9 @@
                 android:layout_marginStart="8dp"
                 android:text="Username"
                 android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"

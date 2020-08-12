@@ -85,8 +85,8 @@ public class PostActivity extends AppCompatActivity {
             uploadTask = fileReference.putFile(mImageUri);
 
             String desc = description.getText().toString();
-            if ( desc.length() < 10 ) {
-                description.setError("Please Insert Document to long");
+            if ( desc.length() < 5 ) {
+                description.setError("Description should be longer than 5 characters");
                 if ( TextUtils.isEmpty(desc) ) {
                     description.setError("Please insert Description");
                     Toast.makeText(this, "Please Insert Description", Toast.LENGTH_SHORT).show();
