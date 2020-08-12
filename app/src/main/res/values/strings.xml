@@ -4,4 +4,12 @@
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
     <string name="logo_pic">Logo pic</string>
+    <string name="collapse">more…</string>
+    <string name="expand">collapse</string>
+    <string name="description_your_post">description your post</string>
+
+    <string name="facebook_app_id">305942790631422</string>
+    <string name="fb_login_protocol_scheme">fb305942790631422</string>
+    <string name="my_posts">My Posts</string>
+
 </resources>

@@ -125,7 +125,6 @@ public class SetupActivity extends AppCompatActivity {
                     .start(this);
         }
 
-        // Cuando se pulsa en el crop button
         if ( requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE ) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
