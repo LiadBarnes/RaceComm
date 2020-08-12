@@ -6,8 +6,8 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.example.racecomm"
-        minSdkVersion 19
+        applicationId "com.swing.racecomm"
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -29,29 +29,36 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //noinspection GradleCompatible
-    implementation 'com.android.support:design:26.+'
+    implementation 'com.android.support:design:26.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.firebase:firebase-auth:16.0.5'
-    implementation 'com.google.firebase:firebase-database:16.0.4'
-    implementation 'com.google.firebase:firebase-storage:16.0.4'
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
+    implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
+    implementation 'com.google.firebase:firebase-analytics:17.4.4'
+
     // text
     implementation 'at.blogc:expandabletextview:1.0.5'
-
-    //fb login
-    implementation 'com.facebook.android:facebook-login:5.15.3'
 
     // glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+
+    //circle imageview
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    //fb login
+    implementation 'com.facebook.android:facebook-login:5.15.3'
+
 }

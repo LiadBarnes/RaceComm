@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "425692203069",
-    "firebase_url": "https://racecomm-e52b4.firebaseio.com",
-    "project_id": "racecomm-e52b4",
-    "storage_bucket": "racecomm-e52b4.appspot.com"
+    "project_number": "298061314958",
+    "firebase_url": "https://racecomm-ebfcf.firebaseio.com",
+    "project_id": "racecomm-ebfcf",
+    "storage_bucket": "racecomm-ebfcf.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:425692203069:android:dc4aad87d6882350b68254",
+        "mobilesdk_app_id": "1:298061314958:android:0d686f2fc7b92cf62ac2df",
         "android_client_info": {
-          "package_name": "com.example.racecomm"
+          "package_name": "com.swing.racecomm"
         }
       },
       "oauth_client": [
         {
-          "client_id": "425692203069-jcotmbv77gbn7af8fm1as05b41i56lo9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.racecomm",
-            "certificate_hash": "0e0adf697b8761499d0f0fd495261dc76e01f125"
-          }
-        },
-        {
-          "client_id": "425692203069-3m22l281ga70prsu8cgp5a87cjodctmu.apps.googleusercontent.com",
+          "client_id": "298061314958-p3nqtrsnvftjqh7g2pn8n56gd05rpuub.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCHoNymmUnF2pCKftNqJi6La2wZtgu7bMk"
+          "current_key": "AIzaSyC_THT4aJzhSI6xk9PRdFWxb0qqgbN2F38"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "425692203069-3m22l281ga70prsu8cgp5a87cjodctmu.apps.googleusercontent.com",
+              "client_id": "298061314958-p3nqtrsnvftjqh7g2pn8n56gd05rpuub.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

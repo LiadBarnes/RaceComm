@@ -44,12 +44,11 @@ public class SetupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference user_ref;
 
-    private StorageTask uploadTask;
     private StorageReference user_profile_img_ref;
 
 
     String curr_user_id;
-    private Uri mImageUri;
+
 
 
     final static int gallery_picker = 1;
