@@ -36,7 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SetupActivity extends AppCompatActivity {
 
-    private EditText UserName, FullName, Country;
+    private EditText UserName, FullName, Country, Car;
     private Button save_info_btn;
     private CircleImageView ProfileImage;
     private ProgressDialog loading_bar;
@@ -64,6 +64,7 @@ public class SetupActivity extends AppCompatActivity {
         UserName = (EditText) findViewById(R.id.setup_username);
         FullName = (EditText) findViewById(R.id.setup_Name);
         Country = (EditText) findViewById(R.id.setup_Country);
+        Car = (EditText) findViewById(R.id.setup_Car);
         save_info_btn = (Button) findViewById(R.id.setup_save_button);
         loadingBar = new ProgressDialog(this);
 
@@ -185,6 +186,7 @@ public class SetupActivity extends AppCompatActivity {
         String user_name = UserName.getText().toString();
         String full_name = FullName.getText().toString();
         String country = Country.getText().toString();
+        String car = Car.getText().toString();
 
         if ( TextUtils.isEmpty(user_name) || TextUtils.isEmpty(full_name) || TextUtils.isEmpty(country) ) {
             Toast.makeText(this, "No blank fields allowed", Toast.LENGTH_SHORT).show();
@@ -199,7 +201,7 @@ public class SetupActivity extends AppCompatActivity {
             user_map.put("fullname", full_name);
             user_map.put("gender", "none");
             user_map.put("country", country);
-            user_map.put("status", "Love RaceComm !!");
+            user_map.put("status", car);
             user_map.put("birthdate", "none");
 
             user_ref.updateChildren(user_map).addOnCompleteListener(new OnCompleteListener() {

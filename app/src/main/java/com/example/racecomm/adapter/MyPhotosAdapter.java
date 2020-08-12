@@ -115,7 +115,7 @@ public class MyPhotosAdapter extends RecyclerView.Adapter<MyPhotosAdapter.ImageV
         publisherInfo(holder.image_profile, holder.username, holder.publisher, post.getPublisher());
         isLiked(post.getPostid(), holder.like);
         nrLikes(holder.likes, post.getPostid());
-        getCommetns(post.getPostid(), holder.comments);
+        getComments(post.getPostid(), holder.comments);
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +164,9 @@ public class MyPhotosAdapter extends RecyclerView.Adapter<MyPhotosAdapter.ImageV
             }
         });
 
+        if (!post.getPublisher().equals(firebaseUser.getUid())){
+            holder.more.setVisibility(View.INVISIBLE);
+        }
         holder.more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -296,7 +299,7 @@ public class MyPhotosAdapter extends RecyclerView.Adapter<MyPhotosAdapter.ImageV
 
     }
 
-    private void getCommetns(String postId, final TextView comments) {
+    private void getComments(String postId, final TextView comments) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Comments").child(postId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override

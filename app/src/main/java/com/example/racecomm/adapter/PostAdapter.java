@@ -42,7 +42,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     private Context mContext;
     private List<Post> mPosts;
-
     private FirebaseUser firebaseUser;
 
     public PostAdapter(Context context, List<Post> posts) {

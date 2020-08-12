@@ -79,6 +79,26 @@
         android:textAlignment="center"
         tools:ignore="RtlCompat"/>
 
+    <!--Main Car multiline-->
+    <EditText
+        android:id="@+id/setup_Car"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="510dp"
+        android:layout_centerHorizontal="true"
+
+        android:ems="10"
+        android:gravity="start|top"
+
+        android:hint="Main Car"
+        android:inputType="textMultiLine"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+
+        android:textAlignment="center"
+        tools:ignore="RtlCompat"/>
+
     <!--Save button-->
     <Button
         android:id="@+id/setup_save_button"
@@ -86,7 +106,7 @@
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="550dp"
+        android:layout_marginTop="590dp"
 
         android:text="Save"
         android:background="@drawable/inputs"

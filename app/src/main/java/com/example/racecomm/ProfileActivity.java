@@ -79,7 +79,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         userInfo();
         getFollowers();
-        getNrPosts();
+        getPosts();
         myPhotos();
 
         if ( profileid.equals(firebaseUser.getUid()) ) {
@@ -239,7 +239,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void getNrPosts() {
+    private void getPosts() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
