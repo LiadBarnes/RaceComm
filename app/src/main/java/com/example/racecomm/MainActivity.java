@@ -1,14 +1,7 @@
 package com.example.racecomm;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,6 +10,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.racecomm.adapter.PostAdapter;
+import com.example.racecomm.model.Post;
 import com.example.racecomm.posts.PostActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +32,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private RecyclerView postFeed;
     private Toolbar toolbar;
     private ImageButton AddNewPostButton;
 
@@ -46,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference user_ref;
 
     String curr_user_id;
+
+
+    private RecyclerView all_users_post_list;
+    private PostAdapter postAdapter;
+    private List<Post> postList;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -60,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Home");
+
+        setPostView();
+        readPosts();
 
         AddNewPostButton = (ImageButton) findViewById(R.id.add_new_post_button);
 
@@ -76,37 +90,31 @@ public class MainActivity extends AppCompatActivity {
 
         user_ref.child(curr_user_id).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if(dataSnapshot.exists())
-                {
-                    if(dataSnapshot.hasChild("fullname"))
-                    {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if ( dataSnapshot.exists() ) {
+                    if ( dataSnapshot.hasChild("fullname") ) {
                         String fullname = dataSnapshot.child("fullname").getValue().toString();
                         NavProfileUName.setText(fullname);
                     }
-                    if(dataSnapshot.hasChild("profileimage"))
-                    {
+                    if ( dataSnapshot.hasChild("profileimage") ) {
                         String image = dataSnapshot.child("profileimage").getValue().toString();
                         Picasso.get().load(image).placeholder(R.drawable.profile).into(NavProfileImage);
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(MainActivity.this, "Profile name does not exists", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
-            {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 UserMenuSelector(menuItem);
                 return false;
             }
@@ -114,8 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         AddNewPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 SendUserToPostActivity();
             }
         });
@@ -124,21 +131,52 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void setPostView() {
+        all_users_post_list = findViewById(R.id.all_users_post_list);
+        all_users_post_list.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        all_users_post_list.setLayoutManager(mLayoutManager);
+        postList = new ArrayList<>();
+        postAdapter = new PostAdapter(this, postList);
+        all_users_post_list.setAdapter(postAdapter);
+    }
+
+    private void readPosts() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Post post = snapshot.getValue(Post.class);
+                    postList.add(post);
+                }
+
+                postAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+    }
 
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if(currentUser == null) {
+        if ( currentUser == null ) {
             // user is not logged in
             SendUserToLoginActivity();
-        }
-        else{
-         CheckUserExistance();
+        } else {
+            CheckUserExistance();
         }
 
     }
@@ -149,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         user_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.hasChild(user_id)){
+                if ( !dataSnapshot.hasChild(user_id) ) {
                     SendUserToSetupActivity();
                 }
             }
@@ -183,28 +221,35 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item))
-        {
+        if ( actionBarDrawerToggle.onOptionsItemSelected(item) ) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void UserMenuSelector(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.nav_post:
                 SendUserToPostActivity();
                 break;
+
             case R.id.nav_profile:
-                Toast.makeText(this,"Profile", Toast.LENGTH_SHORT).show();
+                if ( mAuth.getCurrentUser() != null ) {
+                    SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+                    editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    editor.apply();
+
+                    startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                } else {
+                    Toast.makeText(MainActivity.this, "Please login first.", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
+
             case R.id.nav_Logout:
-                //Toast.makeText(this,"Logout", Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
                 SendUserToLoginActivity();
                 break;
         }
     }
-
 }
