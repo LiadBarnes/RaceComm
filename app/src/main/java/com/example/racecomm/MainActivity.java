@@ -199,26 +199,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Profile", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.nav_home:
-                Toast.makeText(this,"Home", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_friends:
-                Toast.makeText(this,"Friends", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_find_friends:
-                Toast.makeText(this,"Find Friends", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_Messages:
-                Toast.makeText(this,"Messenger", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_Settings:
-                Toast.makeText(this,"Settings", Toast.LENGTH_SHORT).show();
-                break;
-
             case R.id.nav_Logout:
                 //Toast.makeText(this,"Logout", Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
