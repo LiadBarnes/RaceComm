@@ -39,25 +39,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private ImageButton AddNewPostButton;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
-    private CircleImageView NavProfileImage;
     private TextView NavProfileUName;
+    private CircleImageView NavProfileImage;
 
     private FirebaseAuth mAuth;
     private DatabaseReference user_ref;
 
-    String curr_user_id;
-
-
-    private RecyclerView all_users_post_list;
-    private PostAdapter postAdapter;
     private List<Post> postList;
+    private PostAdapter postAdapter;
+    private RecyclerView all_users_post_list;
 
+    String curr_user_id;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         user_ref = FirebaseDatabase.getInstance().getReference().child("Users");
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setTitle("Feed");
 
         setPostView();
         readPosts();
@@ -126,8 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 SendUserToPostActivity();
             }
         });
-
-        //DisplayAllUsersPosts();
 
     }
 

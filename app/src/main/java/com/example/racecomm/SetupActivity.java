@@ -36,23 +36,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SetupActivity extends AppCompatActivity {
 
-    private EditText UserName, FullName, Country, Car;
-    private Button save_info_btn;
-    private CircleImageView ProfileImage;
-    private ProgressDialog loading_bar;
-    private ProgressDialog loadingBar;
     private FirebaseAuth mAuth;
+    private Button save_info_btn;
+    private ProgressDialog loadingBar;
+    private ProgressDialog loading_bar;
     private DatabaseReference user_ref;
-
+    private CircleImageView ProfileImage;
     private StorageReference user_profile_img_ref;
-
+    private EditText UserName, FullName, Country, Car;
 
     String curr_user_id;
-
-
-
     final static int gallery_picker = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +104,6 @@ public class SetupActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -181,7 +174,6 @@ public class SetupActivity extends AppCompatActivity {
         }
     }
 
-
     private void SaveAccountInformation() {
         String user_name = UserName.getText().toString();
         String full_name = FullName.getText().toString();
@@ -224,7 +216,6 @@ public class SetupActivity extends AppCompatActivity {
 
 
     }
-
 
     private void SendUserToMainActivity() {
         Intent main_Intent = new Intent(SetupActivity.this, MainActivity.class);

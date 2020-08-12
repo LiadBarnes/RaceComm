@@ -39,10 +39,10 @@ import java.util.HashMap;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    ImageView close, image_profile;
-    TextView save, tv_change;
     EditText bio;
+    TextView save, tv_change;
     EditText fullname, username;
+    ImageView close, image_profile;
 
     FirebaseUser firebaseUser;
 

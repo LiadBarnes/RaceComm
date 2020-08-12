@@ -21,12 +21,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    private EditText UserEmail, UserPassword, UserRePass;
     private Button reg_btn;
-
+    private FirebaseAuth mAuth;
     private ProgressDialog loading_bar;
-
+    private EditText UserEmail, UserPassword, UserRePass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
             // user is in real-time Database
             SendUserToMainActivity();
         }
-    }
-
-    private void SendUserToMainActivity() {
-        Intent main_Intent = new Intent(RegisterActivity.this, MainActivity.class);
-        main_Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(main_Intent);
-        finish();
     }
 
     private void CreateNewAccount() {
@@ -107,6 +98,13 @@ public class RegisterActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    private void SendUserToMainActivity() {
+        Intent main_Intent = new Intent(RegisterActivity.this, MainActivity.class);
+        main_Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(main_Intent);
+        finish();
     }
 
     private void SendUserToSetupActivity() {

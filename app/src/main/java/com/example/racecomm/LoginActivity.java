@@ -84,12 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
         }
 
-
-
         fbButton = (LoginButton) findViewById(R.id.login_button);
-
-
-
         facebook_signin = findViewById(R.id.facebook_signin);
         google_signin = findViewById(R.id.google_signin);
         facebook_signin.setOnClickListener(this);

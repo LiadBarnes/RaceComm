@@ -37,17 +37,17 @@ import java.util.Locale;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Context context = ProfileActivity.this;
+    Button edit_profile;
     ImageView image_profile, logout;
     TextView posts, followers, following, fullname, bio;
-    Button edit_profile;
 
-    FirebaseUser firebaseUser;
     String profileid;
+    FirebaseUser firebaseUser;
 
     private RecyclerView recyclerView;
     private MyPhotosAdapter myPhotosAdapter;
     private List<Post> postList;
+    private Context context = ProfileActivity.this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +58,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         SharedPreferences prefs = context.getSharedPreferences("PREFS", MODE_PRIVATE);
         profileid = prefs.getString("profileid", "none");
-
 
         image_profile = findViewById(R.id.image_profile);
         posts = findViewById(R.id.posts);
