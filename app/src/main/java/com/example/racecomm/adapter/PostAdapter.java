@@ -55,6 +55,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.post_item, parent, false);
+
         return new PostViewHolder(view);
     }
 
@@ -62,7 +63,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull final PostViewHolder holder, int position) {
         final Post post = mPosts.get(position);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
+        holder.more.setVisibility(View.INVISIBLE);
         Glide.with(mContext).load(post.getPostimage())
                 .apply(new RequestOptions().placeholder(R.drawable.placeholder))
                 .into(holder.post_image);
@@ -150,6 +151,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 editor.apply();
 
                 mContext.startActivity(new Intent(mContext, ProfileActivity.class));
+            }
+        });
+        holder.toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                if ( holder.description.isExpanded() ) {
+                    holder.description.collapse();
+                    holder.toggle.setText(R.string.collapse);
+
+                } else {
+                    holder.description.expand();
+                    holder.toggle.setText(R.string.expand);
+
+                }
             }
         });
     }

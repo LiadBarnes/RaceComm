@@ -76,23 +76,18 @@ public class MyPhotosAdapter extends RecyclerView.Adapter<MyPhotosAdapter.ImageV
             holder.toggle.setVisibility(View.VISIBLE);
         }
 
-        holder.toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                holder.toggle.setText(holder.description.isExpanded() ? R.string.expand : R.string.collapse);
-                holder.description.toggle();
-            }
-        });
 
         holder.toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 if ( holder.description.isExpanded() ) {
                     holder.description.collapse();
-                    holder.toggle.setText(R.string.expand);
+                    holder.toggle.setText(R.string.collapse);
+
                 } else {
                     holder.description.expand();
-                    holder.toggle.setText(R.string.collapse);
+                    holder.toggle.setText(R.string.expand);
+
                 }
             }
         });
